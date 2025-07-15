@@ -1,0 +1,546 @@
+{
+  "project_info": {
+    "project_number": "642677587502",
+    "firebase_url": "https://webdoc-896a8.firebaseio.com",
+    "project_id": "webdoc-896a8",
+    "storage_bucket": "webdoc-896a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642677587502:android:eb92a6e187214c981a69bf",
+        "android_client_info": {
+          "package_name": "com.example.tempdoctorapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642677587502-2sujbfl36miirh1g2eeli7o6im0qlkeg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tempdoctorapp",
+            "certificate_hash": "53afd81ba22c01c70b88875fc93c90f10422116a"
+          }
+        },
+        {
+          "client_id": "642677587502-3811icemu99kjt0f3rbphpjnohutpfuf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tempdoctorapp",
+            "certificate_hash": "4cbe9d7217b03dfcb9538c8277450f60c3fab722"
+          }
+        },
+        {
+          "client_id": "642677587502-9ik5d3oo65b929n2ef84fs5ci42jnom4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tempdoctorapp",
+            "certificate_hash": "1f6efcc9e94abacba25f6056393f80b42f8afd78"
+          }
+        },
+        {
+          "client_id": "642677587502-am5gsmq6i6io7s79kqjdd2nvdpm9n78u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tempdoctorapp",
+            "certificate_hash": "cffca524a766a1c0053b56f261a32130d012b1b6"
+          }
+        },
+        {
+          "client_id": "642677587502-mjjljci31mpan6cmmvbcpm9t1mhgdgtj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tempdoctorapp",
+            "certificate_hash": "16e6c222d66c6653e20416d53320201d4c86c064"
+          }
+        },
+        {
+          "client_id": "642677587502-udgqt5h8p3m53hn3kiq0i9uk8n6160bd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tempdoctorapp",
+            "certificate_hash": "f27a788a224bb9bcced62e7f8fd316444522c093"
+          }
+        },
+        {
+          "client_id": "642677587502-fqk5olk1bss3js37d7080323to31gafm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY2_N3ab_45ggVlisDcuOWxhbzVZZqN34"
+        },
+        {
+          "current_key": "AIzaSyANHeJWCejT7h-ANzPsTj9sC-2qrbs0zbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "642677587502-fqk5olk1bss3js37d7080323to31gafm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "642677587502-0h6n5cagg02sa30cb4dfklelr24e35um.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.doctormacos"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642677587502:android:a25eebe7868578a31a69bf",
+        "android_client_info": {
+          "package_name": "com.twentytwenty.application.webdoctor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642677587502-a75iar34i3q2tiij6afns60f7ivsdqr1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.twentytwenty.application.webdoctor",
+            "certificate_hash": "f27a788a224bb9bcced62e7f8fd316444522c093"
+          }
+        },
+        {
+          "client_id": "642677587502-f0d6m413g3h2j51q9kh26v2sodin3ar3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.twentytwenty.application.webdoctor",
+            "certificate_hash": "53afd81ba22c01c70b88875fc93c90f10422116a"
+          }
+        },
+        {
+          "client_id": "642677587502-rh7130rifoq8jc63tt0k3vapb5qmlcet.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.twentytwenty.application.webdoctor",
+            "certificate_hash": "1f6efcc9e94abacba25f6056393f80b42f8afd78"
+          }
+        },
+        {
+          "client_id": "642677587502-fqk5olk1bss3js37d7080323to31gafm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY2_N3ab_45ggVlisDcuOWxhbzVZZqN34"
+        },
+        {
+          "current_key": "AIzaSyANHeJWCejT7h-ANzPsTj9sC-2qrbs0zbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "642677587502-fqk5olk1bss3js37d7080323to31gafm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "642677587502-0h6n5cagg02sa30cb4dfklelr24e35um.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.doctormacos"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642677587502:android:d0409f661a43fff51a69bf",
+        "android_client_info": {
+          "package_name": "com.webdoc.flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642677587502-fqk5olk1bss3js37d7080323to31gafm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY2_N3ab_45ggVlisDcuOWxhbzVZZqN34"
+        },
+        {
+          "current_key": "AIzaSyANHeJWCejT7h-ANzPsTj9sC-2qrbs0zbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "642677587502-fqk5olk1bss3js37d7080323to31gafm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "642677587502-0h6n5cagg02sa30cb4dfklelr24e35um.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.doctormacos"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642677587502:android:15d9c9d071d304d11a69bf",
+        "android_client_info": {
+          "package_name": "com.webdoc.health"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642677587502-fqk5olk1bss3js37d7080323to31gafm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY2_N3ab_45ggVlisDcuOWxhbzVZZqN34"
+        },
+        {
+          "current_key": "AIzaSyANHeJWCejT7h-ANzPsTj9sC-2qrbs0zbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "642677587502-fqk5olk1bss3js37d7080323to31gafm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "642677587502-0h6n5cagg02sa30cb4dfklelr24e35um.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.doctormacos"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642677587502:android:9a5eeee576ab0eb01a69bf",
+        "android_client_info": {
+          "package_name": "com.webdoc.patient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642677587502-18lu36vnftng78diee8no35p0c3p31ie.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webdoc.patient",
+            "certificate_hash": "47f4fb92c9679b936a0ae22210fdf7e46abb91a3"
+          }
+        },
+        {
+          "client_id": "642677587502-5ad9pu78heuhvqqthq513jh6vjepmu84.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webdoc.patient",
+            "certificate_hash": "53afd81ba22c01c70b88875fc93c90f10422116a"
+          }
+        },
+        {
+          "client_id": "642677587502-ao5e4sfkda0p2a98nkr8c6up6mfifil6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webdoc.patient",
+            "certificate_hash": "16e6c222d66c6653e20416d53320201d4c86c064"
+          }
+        },
+        {
+          "client_id": "642677587502-ebpt0411qougtfpruhmd4i6r5rgepvt2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webdoc.patient",
+            "certificate_hash": "f27a788a224bb9bcced62e7f8fd316444522c093"
+          }
+        },
+        {
+          "client_id": "642677587502-ejkjilbk50lg4tm33tar112u87mtau16.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webdoc.patient",
+            "certificate_hash": "1f6efcc9e94abacba25f6056393f80b42f8afd78"
+          }
+        },
+        {
+          "client_id": "642677587502-el4sr5aro90oeukj63se9kc58sb9v6lt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webdoc.patient",
+            "certificate_hash": "2d2255b364d5e28f5989d3288430a2d3d8c5ad91"
+          }
+        },
+        {
+          "client_id": "642677587502-ffk47utq9rnpcft3slkpcp6m8pcakdq6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webdoc.patient",
+            "certificate_hash": "cffca524a766a1c0053b56f261a32130d012b1b6"
+          }
+        },
+        {
+          "client_id": "642677587502-gldeqivotq4l13b81mbe4vu0ujqjsdq6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webdoc.patient",
+            "certificate_hash": "566f358d61fec641bed57c499823fee881429057"
+          }
+        },
+        {
+          "client_id": "642677587502-nesbg0skqiiushun1bdeihavvet96gts.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webdoc.patient",
+            "certificate_hash": "4cbe9d7217b03dfcb9538c8277450f60c3fab722"
+          }
+        },
+        {
+          "client_id": "642677587502-tvsklv4bi9eidiubhkpfd6pso9fn660t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webdoc.patient",
+            "certificate_hash": "36b2d19628200cf66e653424160f79e25237c501"
+          }
+        },
+        {
+          "client_id": "642677587502-tvtn3ld5or5us9361dsk5pnsiv9fkmca.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webdoc.patient",
+            "certificate_hash": "43641d20aea26901809ac24f337e5ef6a49626fe"
+          }
+        },
+        {
+          "client_id": "642677587502-fqk5olk1bss3js37d7080323to31gafm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY2_N3ab_45ggVlisDcuOWxhbzVZZqN34"
+        },
+        {
+          "current_key": "AIzaSyANHeJWCejT7h-ANzPsTj9sC-2qrbs0zbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "642677587502-fqk5olk1bss3js37d7080323to31gafm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "642677587502-0h6n5cagg02sa30cb4dfklelr24e35um.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.doctormacos"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642677587502:android:4bdbd63bb4478cd31a69bf",
+        "android_client_info": {
+          "package_name": "com.webdoc.webdoc2k24"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642677587502-p7dmgfl9hqnlbhe42gbjj5cmg8h076mj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.webdoc.webdoc2k24",
+            "certificate_hash": "43641d20aea26901809ac24f337e5ef6a49626fe"
+          }
+        },
+        {
+          "client_id": "642677587502-fqk5olk1bss3js37d7080323to31gafm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY2_N3ab_45ggVlisDcuOWxhbzVZZqN34"
+        },
+        {
+          "current_key": "AIzaSyANHeJWCejT7h-ANzPsTj9sC-2qrbs0zbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "642677587502-fqk5olk1bss3js37d7080323to31gafm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "642677587502-0h6n5cagg02sa30cb4dfklelr24e35um.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.doctormacos"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642677587502:android:f13250a3e84215be1a69bf",
+        "android_client_info": {
+          "package_name": "com.webdoc.webdocsdk2021"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642677587502-fqk5olk1bss3js37d7080323to31gafm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY2_N3ab_45ggVlisDcuOWxhbzVZZqN34"
+        },
+        {
+          "current_key": "AIzaSyANHeJWCejT7h-ANzPsTj9sC-2qrbs0zbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "642677587502-fqk5olk1bss3js37d7080323to31gafm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "642677587502-0h6n5cagg02sa30cb4dfklelr24e35um.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.doctormacos"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642677587502:android:04316c0af581b6611a69bf",
+        "android_client_info": {
+          "package_name": "com.wmalick.webdoc_library"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642677587502-f31imv6nf7i26jeem0eadc5hlg97t946.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wmalick.webdoc_library",
+            "certificate_hash": "47f4fb92c9679b936a0ae22210fdf7e46abb91a3"
+          }
+        },
+        {
+          "client_id": "642677587502-fqk5olk1bss3js37d7080323to31gafm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY2_N3ab_45ggVlisDcuOWxhbzVZZqN34"
+        },
+        {
+          "current_key": "AIzaSyANHeJWCejT7h-ANzPsTj9sC-2qrbs0zbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "642677587502-fqk5olk1bss3js37d7080323to31gafm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "642677587502-0h6n5cagg02sa30cb4dfklelr24e35um.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.doctormacos"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642677587502:android:74059aa4bf9b33ba1a69bf",
+        "android_client_info": {
+          "package_name": "com.wmalick.webdocandroidlibrary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642677587502-606fmc743c3fs54uhrlcp8srtb88b2cm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wmalick.webdocandroidlibrary",
+            "certificate_hash": "47f4fb92c9679b936a0ae22210fdf7e46abb91a3"
+          }
+        },
+        {
+          "client_id": "642677587502-fqk5olk1bss3js37d7080323to31gafm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY2_N3ab_45ggVlisDcuOWxhbzVZZqN34"
+        },
+        {
+          "current_key": "AIzaSyANHeJWCejT7h-ANzPsTj9sC-2qrbs0zbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "642677587502-fqk5olk1bss3js37d7080323to31gafm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "642677587502-0h6n5cagg02sa30cb4dfklelr24e35um.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.doctormacos"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

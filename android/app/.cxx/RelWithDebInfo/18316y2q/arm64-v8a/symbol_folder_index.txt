@@ -1,0 +1,1 @@
+/Users/civic/StudioProjects/my_first_app/build/app/intermediates/cxx/RelWithDebInfo/18316y2q/obj/arm64-v8a

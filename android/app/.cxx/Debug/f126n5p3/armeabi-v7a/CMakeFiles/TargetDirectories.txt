@@ -1,0 +1,2 @@
+/Users/civic/StudioProjects/my_first_app/android/app/.cxx/Debug/f126n5p3/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/civic/StudioProjects/my_first_app/android/app/.cxx/Debug/f126n5p3/armeabi-v7a/CMakeFiles/rebuild_cache.dir

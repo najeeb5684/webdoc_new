@@ -1,0 +1,1 @@
+/Users/civic/StudioProjects/my_first_app/android/app/build/intermediates/cxx/RelWithDebInfo/3e6933jh/obj/x86_64

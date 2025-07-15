@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>642677587502-18lu36vnftng78diee8no35p0c3p31ie.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB4ZtyOAV8O6weBXUm__yUIvWdurQDMzvU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>642677587502</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.webdoc.health</string>
+	<key>PROJECT_ID</key>
+	<string>webdoc-896a8</string>
+	<key>STORAGE_BUCKET</key>
+	<string>webdoc-896a8.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:642677587502:ios:aae4b170822d7ad31a69bf</string>
+	<key>DATABASE_URL</key>
+	<string>https://webdoc-896a8.firebaseio.com</string>
+</dict>
+</plist>

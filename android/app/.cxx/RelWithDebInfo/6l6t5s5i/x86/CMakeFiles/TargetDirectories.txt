@@ -1,0 +1,2 @@
+/Users/civic/StudioProjects/my_first_app/android/app/.cxx/RelWithDebInfo/6l6t5s5i/x86/CMakeFiles/edit_cache.dir
+/Users/civic/StudioProjects/my_first_app/android/app/.cxx/RelWithDebInfo/6l6t5s5i/x86/CMakeFiles/rebuild_cache.dir

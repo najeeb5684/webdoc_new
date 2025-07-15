@@ -1,0 +1,35 @@
+<resources>
+    <!-- Theme applied to the Android window as soon as the process has started.
+         This theme determines the color of the Android window while your
+         Flutter UI initializes, as well as behind your Flutter UI while its
+         running.
+
+         This Theme is only used for Android versions running prior to Android S
+         https://developer.android.com/reference/android/os/Build.VERSION_CODES#S
+         While on Android S the window background is controlled directly by FlutterSplashScreen.
+    -->
+    <style name="LaunchTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Show a splash screen on the activity. Automatically removed when
+             Flutter draws its first frame -->
+        <item name="android:windowBackground">@drawable/launch_background</item>
+
+        <!-- Displaying an image on the screen needs to be enabled, see
+           https://developer.android.com/reference/android/os/Build.VERSION_CODES#Q
+        -->
+        <!--<item name="android:windowSplashScreenAnimatedIcon">@drawable/launch_background</item>-->
+
+        <!-- Add these three lines if you want to set the screen to "full screen". -->
+        <item name="android:statusBarColor">@color/white_icon</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- Theme to apply as soon as Flutter begins rendering frames
+        <item name="android:windowSplashScreenAnimationDuration">10</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@android:color/white</item>-->
+    </style>
+
+    <!-- You can define a new style to start with a fully transparent theme-->
+    <style name="NormalTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">?android:colorBackground</item>
+    </style>
+
+</resources>
