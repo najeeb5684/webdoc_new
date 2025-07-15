@@ -1,2 +1,0 @@
-/Users/civic/StudioProjects/my_first_app/android/app/.cxx/Debug/3h5381f5/arm64-v8a/CMakeFiles/edit_cache.dir
-/Users/civic/StudioProjects/my_first_app/android/app/.cxx/Debug/3h5381f5/arm64-v8a/CMakeFiles/rebuild_cache.dir
