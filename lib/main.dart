@@ -23,6 +23,7 @@ import 'screens/splash_screen.dart'; // Import SplashScreen
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Required for Firebase and preferredOrientations
 
+
   // Lock screen orientation to portrait
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
