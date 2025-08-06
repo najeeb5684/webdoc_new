@@ -32,8 +32,8 @@ android {
         applicationId = "com.webdoc.health"
         minSdk = 28
         targetSdk = 36
-        versionCode = 19
-        versionName = "1.1.8"
+        versionCode = 20
+        versionName = "1.1.9"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -119,102 +119,7 @@ dependencies {
     implementation "androidx.datastore:datastore-preferences:1.0.0"
     kapt "androidx.room:room-compiler:$room_version"
     kapt "com.android.databinding:compiler:$android_plugin_version"
+
+    // Facebook SDK
+    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
 }
-
-/*
-plugins {
-    id "com.android.application"
-    id 'com.google.gms.google-services' // Keep if using Firebase
-    id "kotlin-android"
-    id "dev.flutter.flutter-gradle-plugin"
-}
-
-def keystoreProperties = new Properties() // **FIXED: Added 'new' keyword**
-def keystorePropertiesFile = rootProject.file("key.properties")
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile)) // **FIXED: Added 'new' keyword**
-}
-
-android {
-    namespace = "com.webdoc.health" // **IMPORTANT:  Match the old app's `applicationId`!**
-    compileSdk 35 // **IMPORTANT: Match the old app's `compileSdk`!**
-    ndkVersion '25.1.8937393'  //Or update it to 26.0.5639773
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-        coreLibraryDesugaringEnabled true
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
-    }
-
-    defaultConfig {
-        applicationId = "com.webdoc.health"  // **MUST MATCH the previous app**
-        minSdk = 28 // **IMPORTANT: Match or increase the old app's `minSdk`!  You CANNOT reduce it!**
-        targetSdk = 35 // **IMPORTANT: Match the old app's `targetSdk`!**
-        versionCode = 4 // **IMPORTANT:  MUST be greater than your previous app's (56)**
-        versionName = "1.0.3" // **IMPORTANT:  Incremented for clarity.  This is what users see.**
-        multiDexEnabled true // Keep this if your previous app used it.
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"  //Add this line for testing
-    }
-
-    signingConfigs {
-        release {
-            if (keystorePropertiesFile.exists()) {
-                storeFile = file(keystoreProperties["storeFile"])
-                storePassword = keystoreProperties["storePassword"]
-                keyAlias = keystoreProperties["keyAlias"]
-                keyPassword = keystoreProperties["keyPassword"]
-            }
-
-        }
-
-    }
-    buildTypes {
-        release {
-            if (keystorePropertiesFile.exists()) {
-                signingConfig signingConfigs.release
-                minifyEnabled true
-                shrinkResources true
-                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            } else {
-                // Handle the case where the keystore properties file doesn't exist
-                // You can either skip signing, or sign with debug keys
-                signingConfig signingConfigs.debug
-                minifyEnabled false
-                shrinkResources false
-            }
-
-        }
-        debug {
-            signingConfig signingConfigs.debug
-        }
-    }
-
-    buildFeatures {
-        viewBinding true  //Keep it if you are using viewBinding
-    }
-
-    aaptOptions {
-        cruncherEnabled = false  //Keep it if you are using viewBinding
-    }
-    packagingOptions {  //Keep it if you are using viewBinding
-        exclude 'source_tips'
-    }
-}
-
-flutter {
-    source = "../.."
-}
-dependencies {
-    implementation "androidx.appcompat:appcompat:1.7.1" // Keep this if you need it.
-    implementation "androidx.core:core-ktx:1.13.0"
-    implementation "com.google.android.material:material:1.12.0"
-    implementation "androidx.multidex:multidex:2.0.1"
-
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'  // Add this line here
-
-
-}*/

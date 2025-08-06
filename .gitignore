@@ -10,3 +10,4 @@ build/
 *.ipa
 *.aab
 **/kernel_blob.bin
+android/app/.cxx/

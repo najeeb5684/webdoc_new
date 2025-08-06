@@ -1,22 +1,64 @@
 
 
+import 'dart:io';
 
 import 'package:Webdoc/screens/dashboard_screen.dart';
 import 'package:Webdoc/screens/login_screen.dart';
-
 import 'package:Webdoc/screens/profile_screen.dart';
 import 'package:Webdoc/screens/privacy_policy_terms_screen.dart';
 import 'package:Webdoc/screens/subscription_screen.dart';
+import 'package:Webdoc/screens/wallet_history_screen.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // Import FontAwesome
+import '../models/wallet_balance_response.dart'; // Create this model
+import '../services/api_service.dart'; // Make sure this has the new API call
 import '../theme/app_colors.dart';
 import '../theme/app_styles.dart';
-
 import '../utils/shared_preferences.dart';
 import '../utils/global.dart';
 
+class AccountScreen extends StatefulWidget {
+  @override
+  _AccountScreenState createState() => _AccountScreenState();
+}
 
-class AccountScreen extends StatelessWidget {
+class _AccountScreenState extends State<AccountScreen> {
   bool rememberMe = false;
+  String _walletBalance = '';
+  bool _isLoadingBalance = true;
+  String _deviceModel = '';
+  bool _isLoadingDeviceInfo = true;
+  @override
+  void initState() {
+    super.initState();
+   // _loadDeviceInfo();
+    _loadWalletBalance();
+  }
+
+  Future<void> _loadWalletBalance() async {
+    setState(() {
+      _isLoadingBalance = true;
+    });
+    final patientId = SharedPreferencesManager.getString("id") ?? "0";
+    final apiService = ApiService();
+    final walletBalanceResponse = await apiService.getWalletBalance(context, patientId); // Replace patient id
+
+    if (walletBalanceResponse != null) {
+      setState(() {
+        _walletBalance = walletBalanceResponse.payLoad.balance;
+      });
+    } else {
+      // Handle the error as you see fit, e.g., show a snackbar
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to load wallet balance')));
+      _walletBalance = '0'; // Display "Error" or a default value
+    }
+    setState(() {
+      _isLoadingBalance = false;
+    });
+  }
+
   String _getInitials(String? name) {
     if (name == null || name.isEmpty) {
       return "U"; // Default initial if name is missing
@@ -31,31 +73,26 @@ class AccountScreen extends StatelessWidget {
     }
     return initials;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         backgroundColor: AppColors.backgroundColor,
-        title:  Row(
+        title: Row(
           children: [
             IconButton(
                 onPressed: () {
-                  /*Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const DashboardScreen(),
-                    ),
-                  );*/
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => DashboardScreen()),
                         (Route<dynamic> route) => false,
                   );
                 },
-                icon: const Icon(Icons.arrow_back_ios,color: Colors.black,size: 16)),
+                icon: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 16)),
             Text(
                 'Settings',
-                style: AppStyles.bodyLarge(context).copyWith(color: Colors.black,fontWeight: FontWeight.bold)
+                style: AppStyles.bodyLarge(context).copyWith(color: Colors.black, fontWeight: FontWeight.bold)
             ),
           ],
         ),
@@ -67,6 +104,21 @@ class AccountScreen extends StatelessWidget {
             children: [
               _buildProfileHeader(context),
               const SizedBox(height: 16),
+              _buildListTile(
+                context: context,
+                icon: Icons.account_balance_wallet,
+                text: "Wallet History",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WalletHistoryScreen(
+                        patientId: SharedPreferencesManager.getString("id") ?? "0",
+                      ),
+                    ),
+                  );
+                },
+              ),
               _buildListTile(
                 context: context,
                 icon: Icons.subscriptions,
@@ -105,14 +157,6 @@ class AccountScreen extends StatelessWidget {
                   );
                 },
               ),
-             /* _buildListTile(
-                context: context,
-                icon: Icons.cancel_presentation,
-                text: "Appointment cancel rules",
-                onTap: () {
-                  print("Appointment cancel rules tapped");
-                },
-              ),*/
               _buildListTile(
                 context: context,
                 icon: Icons.question_answer,
@@ -126,7 +170,6 @@ class AccountScreen extends StatelessWidget {
                   );
                 },
               ),
-
               _buildListTile(
                 context: context,
                 icon: Icons.delete,
@@ -140,6 +183,15 @@ class AccountScreen extends StatelessWidget {
                   );
                 },
               ),
+             /* _buildListTile(
+                context: context,
+                icon: Icons.phone_android,
+                text: "Device Info",
+                onTap: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(_deviceModel)));
+                },
+              ),*/
               _buildListTile(
                 context: context,
                 icon: Icons.logout,
@@ -156,10 +208,8 @@ class AccountScreen extends StatelessWidget {
 
   Widget _buildProfileHeader(BuildContext context) {
     String userName = SharedPreferencesManager.getString("name") ?? "User Name";
-    String userMobile =
-        SharedPreferencesManager.getString("mobileNumber") ?? "Mobile Number";
 
-    return GestureDetector(  // Wrap with GestureDetector
+    return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
@@ -173,62 +223,95 @@ class AccountScreen extends StatelessWidget {
         decoration: BoxDecoration(
             color: AppColors.primaryColorLight,
             borderRadius: BorderRadius.circular(16),
-            boxShadow: [  // Add subtle shadow
+            boxShadow: [
               BoxShadow(
-                color: AppColors.primaryColor.withOpacity(0.5),  // Very light black
+                color: AppColors.primaryColor.withOpacity(0.5),
                 spreadRadius: 2,
                 blurRadius: 7,
-                offset: const Offset(0, 3),  // Slightly downward
+                offset: const Offset(0, 3),
               ),
             ]
         ),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 64,
-              height: 64,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: AppColors.cardColor,
-                  width: 2,
-                ),
-              ),
-              child: CircleAvatar(
-                radius: 30,
-                backgroundColor: AppColors.cardColor,
-                child: Text(
-                  _getInitials(userName), // Display initials
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: AppColors.backgroundColor,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    userName,
-                    style: AppStyles.bodyLarge(context).copyWith(
-                      color: AppColors.primaryTextColor,fontWeight: FontWeight.bold
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    "View Profile",
-                    style: AppStyles.bodySmall(context).copyWith(
+            Row(
+              children: [
+                Container(
+                  width: 64,
+                  height: 64,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
                       color: AppColors.cardColor,
+                      width: 2,
                     ),
                   ),
-                ],
-              ),
+                  child: CircleAvatar(
+                    radius: 30,
+                    backgroundColor: AppColors.cardColor,
+                    child: Text(
+                      _getInitials(userName), // Display initials
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: AppColors.backgroundColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded( // Use Expanded to take up remaining space
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        userName,
+                        style: AppStyles.bodyLarge(context).copyWith(
+                            color: AppColors.primaryTextColor, fontWeight: FontWeight.bold
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        "View Profile",
+                        style: AppStyles.bodySmall(context).copyWith(
+                          color: AppColors.cardColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Icon(Icons.arrow_forward_ios_rounded, color: AppColors.cardColor, size: 16), // Forward icon
+              ],
             ),
-            Icon(Icons.arrow_forward_ios_rounded,
-                color: AppColors.cardColor, size: 16),
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end, // Align to the right
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.cardColor, width: 0.5),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(FontAwesomeIcons.wallet, color: AppColors.cardColor, size: 16),
+                      const SizedBox(width: 4),
+                      _isLoadingBalance
+                          ? SizedBox(width: 12, height: 12, child: CircularProgressIndicator(strokeWidth: 2,color: AppColors.primaryColor,))
+                          : Text(
+                        "PKR/- $_walletBalance",
+                        style: AppStyles.bodyMedium(context).copyWith(
+                          color: AppColors.primaryTextColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -262,8 +345,26 @@ class AccountScreen extends StatelessWidget {
       ),
     );
   }
+ /* Future<void> _loadDeviceInfo() async {
+    final deviceInfo = DeviceInfoPlugin();
+
+    try {
+      if (Platform.isAndroid) {
+        final androidInfo = await deviceInfo.androidInfo;
+        _deviceModel = '"Manufacturer: "${androidInfo.manufacturer}\n"Model: "${androidInfo.model}\n"Name: "${androidInfo.name}';
+      } else if (Platform.isIOS) {
+        final iosInfo = await deviceInfo.iosInfo;
+        _deviceModel = '"Model Name: "${iosInfo.modelName}\n"Model: "${iosInfo.physicalRamSize}\n"Name: "${iosInfo.name}';
+      }
+    } catch (e) {
+      _deviceModel = 'Unknown';
+    }
 
 
+    setState(() {
+      _isLoadingDeviceInfo = false;
+    });
+  }*/
 
   Future<void> _logout(BuildContext context) async {
     showDialog(
@@ -360,412 +461,5 @@ class AccountScreen extends StatelessWidget {
     );
   }
 }
-
-
-
-
-/*import 'package:Webdoc/screens/login_screen.dart';
-import 'package:Webdoc/screens/privacy_policy_terms_screen.dart';
-import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_styles.dart';
-import '../utils/shared_preferences.dart';
-import '../utils/global.dart';
-
-
-class AccountScreen extends StatelessWidget {
-  bool rememberMe = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              _buildProfileHeader(context),
-              const SizedBox(height: 16),
-              _buildListTile(
-                context: context,
-                icon: Icons.subscriptions,
-                text: "Subscription",
-                onTap: () {
-                  print("Subscription tapped");
-                },
-              ),
-              _buildListTile(
-                context: context,
-                icon: Icons.description,
-                text: "Terms and Conditions",
-                onTap: () {
-                  Global.privacyTermsUrl = "terms";
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PrivacyPolicyTermsScreen()),
-                  );
-                },
-              ),
-              _buildListTile(
-                context: context,
-                icon: Icons.report,
-                text: "Complaints",
-                onTap: () {
-                  print("Complaints tapped");
-                },
-              ),
-              _buildListTile(
-                context: context,
-                icon: Icons.cancel_presentation,
-                text: "Appointment cancel rules",
-                onTap: () {
-                  print("Appointment cancel rules tapped");
-                },
-              ),
-              _buildListTile(
-                context: context,
-                icon: Icons.question_answer,
-                text: "FAQ's",
-                onTap: () {
-                  print("FAQ's tapped");
-                },
-              ),
-              _buildListTile(
-                context: context,
-                icon: Icons.logout,
-                text: "Logout",
-                onTap: () => _logout(context),
-              ),
-              const SizedBox(height: 20),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildProfileHeader(BuildContext context) {
-    String userName = SharedPreferencesManager.getString("name") ?? "User Name";
-    String userMobile =
-        SharedPreferencesManager.getString("mobileNumber") ?? "Mobile Number";
-
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.all(16),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.primaryColorLight,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 64,
-            height: 64,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: AppColors.cardColor,
-                width: 2,
-              ),
-            ),
-            child: const CircleAvatar(
-              radius: 30,
-              backgroundImage: NetworkImage(
-                  "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8MA=="),
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  userName,
-                  style: AppStyles.titleMedium.copyWith(
-                    color: AppColors.primaryTextColor,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Text(
-                  "View Profile",
-                  style: AppStyles.bodyMedium.copyWith(
-                    color: AppColors.cardColor,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Icon(Icons.arrow_forward_ios_rounded,
-              color: AppColors.cardColor, size: 18),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildListTile({
-    required BuildContext context,
-    required IconData icon,
-    required String text,
-    required VoidCallback onTap,
-  }) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      decoration: BoxDecoration(
-        color: AppColors.primaryColorLight,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: ListTile(
-        leading: Icon(icon, color: AppColors.cardColor),
-        title: Text(
-          text,
-          style: AppStyles.bodyLarge.copyWith(
-            color: AppColors.primaryTextColor,
-          ),
-        ),
-        trailing: Icon(Icons.arrow_forward_ios_rounded,
-            color: AppColors.cardColor, size: 18),
-        onTap: onTap,
-      ),
-    );
-  }
-
-  Future<void> _logout(BuildContext context) async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Logout"),
-          content: const Text("Are you sure you want to logout?"),
-          actions: [
-            TextButton(
-              child: const Text("Cancel"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: const Text("Logout"),
-              onPressed: () async {
-                Navigator.of(context).pop();
-
-                await SharedPreferencesManager.remove('mobileNumber');
-                await SharedPreferencesManager.remove('pin');
-                await SharedPreferencesManager.remove('isPackageActivated');
-                await SharedPreferencesManager.remove('id');
-                await SharedPreferencesManager.remove('name');
-                await SharedPreferencesManager.remove('packageName');
-
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-}*/
-
-
-
-/*import 'package:Webdoc/screens/login_screen.dart';
-import 'package:Webdoc/screens/past_appointments_screen.dart';
-import 'package:Webdoc/screens/profile_screen.dart';
-import 'package:Webdoc/screens/privacy_policy_terms_screen.dart';
-import 'package:flutter/material.dart';
-import '../widgets/custom_list_item.dart';
-import '../utils/shared_preferences.dart';
-import '../utils/global.dart'; // Ensure you have this for global variables
-import 'package:google_fonts/google_fonts.dart'; // Import Google Fonts
-
-
-class AccountScreen extends StatelessWidget {
-  bool rememberMe = false;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Account"),
-        centerTitle: true,
-      ),
-      backgroundColor: Colors.grey[50],
-      body: SafeArea(
-        child: SingleChildScrollView( // Wrap the entire content in SingleChildScrollView
-          child: Column(
-            children: [
-              _buildProfileHeader(context), // Use the new profile header
-              CustomListItem(
-                icon: Icons.phone,
-                text: SharedPreferencesManager.getString("mobileNumber") ??
-                    "Phone Number",
-                onTap: () {
-                  print("Phone number tapped");
-                },
-              ),
-              CustomListItem(
-                icon: Icons.history,
-                text: "Appointment History",
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => PastAppointmentsScreen()),
-                  );
-                },
-              ),
-              CustomListItem(
-                icon: Icons.description,
-                text: "Terms & Conditions",
-                onTap: () {
-                  Global.privacyTermsUrl = "terms";
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PrivacyPolicyTermsScreen()),
-                  );
-                },
-              ),
-              CustomListItem(
-                icon: Icons.privacy_tip,
-                text: "Privacy Policy",
-                onTap: () {
-                  Global.privacyTermsUrl = "privacy";
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PrivacyPolicyTermsScreen()),
-                  );
-                },
-              ),
-              CustomListItem(
-                icon: Icons.delete_forever,
-                text: "Delete Account",
-                onTap: () {
-                  Global.privacyTermsUrl = "delete";
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PrivacyPolicyTermsScreen()),
-                  );
-                },
-              ),
-              CustomListItem(
-                icon: Icons.logout,
-                text: "Logout",
-                onTap: () => _logout(context),
-              ),
-              const SizedBox(height: 20), // Add some space at the bottom
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  // New Profile Header Widget
-  Widget _buildProfileHeader(BuildContext context) {
-    String userName = SharedPreferencesManager.getString("name") ?? "User Name";
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: Colors.black,
-                width: 2.0,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  spreadRadius: 2,
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: const CircleAvatar(
-              radius: 50,
-              backgroundColor: Colors.white,
-              child: Icon(
-                Icons.person,
-                size: 40,
-                color: Colors.black,
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            userName,
-            style: GoogleFonts.poppins(
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
-              color: Colors.black87,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ProfileScreen()),
-              );
-            },
-            child: const Text("View Profile"),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _logout(BuildContext context) async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Logout"),
-          content: const Text("Are you sure you want to logout?"),
-          actions: [
-            TextButton(
-              child: const Text("Cancel"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: const Text("Logout"),
-              onPressed: () async {
-                Navigator.of(context).pop();
-
-                await SharedPreferencesManager.remove('mobileNumber');
-                await SharedPreferencesManager.remove('pin');
-                await SharedPreferencesManager.remove('isPackageActivated');
-                await SharedPreferencesManager.remove('id');
-                await SharedPreferencesManager.remove('name');
-                await SharedPreferencesManager.remove('packageName');
-              //  await SharedPreferencesManager.clear();
-              *//*  if(rememberMe){
-                  await SharedPreferencesManager.getString('countryCode') ?? "country code";
-                  await SharedPreferencesManager.getString('phoneNumber')?? "number";
-                  await SharedPreferencesManager.getString('pin')?? "pin";
-                  await SharedPreferencesManager.getBool('rememberMe')?? true;
-                }*//*
-
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-}*/
-
 
 

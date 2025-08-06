@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 
 import 'package:flutter/material.dart';
 import 'package:country_code_picker/country_code_picker.dart';
@@ -118,7 +120,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         );
       }
     } else {
-      registerResponse = await _apiService.registerUser(context, widget.mobileNumber, name, password,'${widget.mobileNumber}@webdoc.com.pk');
+      if(Platform.isAndroid) {
+        // iOS and macOS specific behavior
+        registerResponse = await _apiService.registerUser(context, widget.mobileNumber, name, password,'${widget.mobileNumber}@webdoc.com.pk',"android");
+
+      }else if(Platform.isIOS){
+        registerResponse = await _apiService.registerUser(context, widget.mobileNumber, name, password,'${widget.mobileNumber}@webdoc.com.pk',"iOS");
+      }
 
       setState(() {
         _isLoading = false;
@@ -126,12 +134,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
       if (registerResponse != null) {
         if (registerResponse.statusCode == 1) {
-
+          final loginData = registerResponse.payLoad;
           // Save UserID in shared preferences
           await SharedPreferencesManager.putString('id', registerResponse.payLoad?.applicationUserId ?? '');
           await SharedPreferencesManager.putString('mobileNumber', widget.mobileNumber);
           await SharedPreferencesManager.putString('name', name);
           await SharedPreferencesManager.putString('pin', password); // Save Pin
+
+          await SharedPreferencesManager.putBool('isPackageActivated', loginData?.isPackageActivated ?? false);
+
+          if (loginData?.packageName != null) {
+            await SharedPreferencesManager.putString(
+                'packageName', loginData?.packageName ?? '');
+            await SharedPreferencesManager.putString(
+                'activeDate', loginData?.activeDate ?? '');
+            await SharedPreferencesManager.putString(
+                'expiryDate', loginData?.expiryDate ?? '');
+          }
 
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Registration successful!')),

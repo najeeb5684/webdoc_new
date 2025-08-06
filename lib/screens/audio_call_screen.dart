@@ -343,7 +343,7 @@ class _AudioCallScreenState extends State<AudioCallScreen> with TickerProviderSt
         _ringingDuration = _ringingDuration + const Duration(seconds: 1);
       });
 
-      if (_ringingDuration.inSeconds > 30) {
+      if (_ringingDuration.inSeconds > 59) {
         _stopRingingTimer();
         _stopRinging();
         if (mounted) {

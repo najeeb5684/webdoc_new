@@ -16,6 +16,7 @@ import 'package:path/path.dart' as p;  // Import path package
 
 import '../models/specialist_prescription_item.dart';
 import '../models/specialist_prescription_response.dart';
+import '../services/api_service.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_styles.dart';
 
@@ -49,8 +50,8 @@ class _SpecialistPrescriptionDetailScreenState
     });
 
     // Construct the URL with the consultation_id as a query parameter
-    final String url =
-        'https://webdocsite.webddocsystems.com/public/api/v1/prescription/view?consultation_id=${widget.consultationId}';
+  //  final String url = 'https://webdocsite.webddocsystems.com/public/api/v1/prescription/view?consultation_id=${widget.consultationId}';
+    final String url = '${ApiService.irfanBaseUrl}prescription/view?consultation_id=${widget.consultationId}';
 
     final Map<String, String> headers = {
       'accept': 'text/plain',

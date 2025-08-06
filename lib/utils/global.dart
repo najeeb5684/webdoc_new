@@ -117,4 +117,6 @@ class Global {
   static List<dynamic> bookedList = [];
 
   static String? appointmentNo="0";
+
+  static String paymentMethod="";
 }

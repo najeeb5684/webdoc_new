@@ -211,13 +211,10 @@ class _LoginScreenState extends State<LoginScreen> {
         // Login Successful
         final loginData = loginResponse!.payLoad?.user;
 
-        await SharedPreferencesManager.putString(
-            'id', loginData?.id ?? '');
-        await SharedPreferencesManager.putString(
-            'mobileNumber', loginData?.phoneNumber ?? '');
+        await SharedPreferencesManager.putString('id', loginData?.id ?? '');
+        await SharedPreferencesManager.putString('mobileNumber', loginData?.phoneNumber ?? '');
         await SharedPreferencesManager.putString('name', loginData?.userName ?? '');
-        await SharedPreferencesManager.putBool(
-            'isPackageActivated', loginData?.isPackageActivated ?? false);
+        await SharedPreferencesManager.putBool('isPackageActivated', loginData?.isPackageActivated ?? false);
 
         if (loginData?.packageName != null) {
           await SharedPreferencesManager.putString(
@@ -227,8 +224,7 @@ class _LoginScreenState extends State<LoginScreen> {
           await SharedPreferencesManager.putString(
               'expiryDate', loginData?.expiryDate ?? '');
         }
-        await SharedPreferencesManager.putString(
-            'pin', _passwordController.text);
+        await SharedPreferencesManager.putString('pin', _passwordController.text);
         // Save phone number and password if "Remember Me" is checked
         if (rememberMe) {
           await SharedPreferencesManager.putString('countryCode', countryCode);

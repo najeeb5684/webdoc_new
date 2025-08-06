@@ -335,6 +335,9 @@ class _JazzCashScreenState extends State<JazzCashScreen> {
         appointmentTime: widget.appointmentTime!,
         // appointmentTime: "19:40",
         slotNumber: widget.slotNumber!,
+          paymentMethod:"jazzcash",
+          price:widget.fees.toString(),
+          couponCode:""
       );
 
       // Dismiss loading overlay

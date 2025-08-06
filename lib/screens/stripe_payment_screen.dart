@@ -15,6 +15,7 @@ import 'package:screenshot/screenshot.dart';
 import '../services/api_service.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_styles.dart';
+import '../utils/global.dart';
 import '../utils/shared_preferences.dart';
 import 'doctor_list_screen.dart';
 
@@ -28,6 +29,7 @@ class StripePaymentScreen extends StatefulWidget {
   final String? appointmentTime;
   final String? slotNumber;
   final String? fees;
+  final String? couponCode;
 
   const StripePaymentScreen({
     Key? key,
@@ -40,6 +42,7 @@ class StripePaymentScreen extends StatefulWidget {
     this.appointmentTime,
     this.slotNumber,
     this.fees,
+    this.couponCode,
   }) : super(key: key);
 
   @override
@@ -60,6 +63,10 @@ class _StripePaymentScreenState extends State<StripePaymentScreen> {
   String _appointmentcancelUrl = "https://appointment.webdoc.com.pk/appointment-payment-cancel";
   String _cancelUrl = "https://appointment.webdoc.com.pk/payment-cancel";
 
+/*  String _successUrl = "https://appointment.webdoc.com.pk/payment-success";
+  String _appointmentsuccessUrl = "https://appointment.6by6.co/appointment-payment-success";
+  String _appointmentcancelUrl = "https://appointment.6by6.co/appointment-payment-cancel";
+  String _cancelUrl = "https://appointment.webdoc.com.pk/payment-cancel";*/
   @override
   void initState() {
     super.initState();
@@ -131,11 +138,12 @@ class _StripePaymentScreenState extends State<StripePaymentScreen> {
   Future<void> _getCheckoutUrl() async {
     String apiUrl ="";
     if(widget.packageId!=0){
-      apiUrl =
-          'https://webdocsite.webddocsystems.com/public/api/v1/stripe/payment?profile_id=${SharedPreferencesManager.getString('id')}&package_id=${widget.packageId}';
+
+      apiUrl = '${ApiService.irfanBaseUrl}stripe/payment?profile_id=${SharedPreferencesManager.getString('id')}&package_id=${widget.packageId}';
+    //  apiUrl = 'https://digital.webdoc.com.pk/ci4webdocsite/public/api/v1/stripe/payment?profile_id=${SharedPreferencesManager.getString('id')}&package_id=${widget.packageId}';
     } else {
-      apiUrl =
-          'https://webdocsite.webddocsystems.com/public/api/v1/stripe/appointment-payment?profile_id=${SharedPreferencesManager.getString('id')}&price=${widget.fees}';
+      apiUrl = '${ApiService.irfanBaseUrl}stripe/appointment-payment?profile_id=${SharedPreferencesManager.getString('id')}&price=${widget.fees}&couponCode=${widget.couponCode}';
+     // apiUrl = 'https://digital.webdoc.com.pk/ci4webdocsite/public/api/v1/stripe/appointment-payment?profile_id=${SharedPreferencesManager.getString('id')}&price=${widget.fees}&couponCode=${widget.couponCode}';
     }
 
 
@@ -253,7 +261,7 @@ class _StripePaymentScreenState extends State<StripePaymentScreen> {
         SharedPreferencesManager.putString(
             "activeDate", loginResponse.payLoad?.user?.activeDate ?? '');
         SharedPreferencesManager.putString(
-            "PackageName", loginResponse.payLoad?.user?.packageName ?? '');
+            "packageName", loginResponse.payLoad?.user?.packageName ?? '');
 
         // Now show the receipt dialog
         await showBookingReceiptDialog(
@@ -297,6 +305,9 @@ class _StripePaymentScreenState extends State<StripePaymentScreen> {
         appointmentDate: widget.appointmentDate!,
         appointmentTime: widget.appointmentTime!,
         slotNumber: widget.slotNumber!,
+          paymentMethod:Global.paymentMethod,
+          price: widget.fees.toString(),
+          couponCode: widget.couponCode.toString(),
       );
       Navigator.of(context).pop();
 

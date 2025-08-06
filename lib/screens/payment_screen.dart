@@ -19,6 +19,7 @@ class PaymentScreen extends StatefulWidget {
   final String? appointmentTime;
   final String? slotNumber;
   final String? fees;
+  final String? couponCode;
 
   const PaymentScreen({
     Key? key,
@@ -30,6 +31,7 @@ class PaymentScreen extends StatefulWidget {
     this.appointmentTime,
     this.slotNumber,
     this.fees,
+    this.couponCode,
   }) : super(key: key);
 
   const PaymentScreen.appointment({
@@ -39,6 +41,7 @@ class PaymentScreen extends StatefulWidget {
     required this.appointmentTime,
     required this.slotNumber,
     required this.fees,
+    required this.couponCode,
   })  : packageId = null,
         packageName = null,
         packagePrice = null,
@@ -197,6 +200,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           appointmentTime: widget.appointmentTime,
                           slotNumber: widget.slotNumber,
                           fees: widget.fees,
+                            couponCode: widget.couponCode
                         ),
                       ),
                     );
@@ -214,6 +218,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           appointmentTime: widget.appointmentTime,
                           slotNumber: widget.slotNumber,
                           fees: widget.fees,
+                          couponCode: widget.couponCode,
                         ),
                       ),
                     );

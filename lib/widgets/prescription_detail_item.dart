@@ -1,3 +1,4 @@
+import 'package:Webdoc/models/prescription_response_new.dart';
 import 'package:Webdoc/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +8,7 @@ import '../theme/app_styles.dart';
 
 
 class PrescriptionDetailItem extends StatelessWidget {
-  final Consultationdetail detail;
+  final ConsultationDetail detail;
 
   const PrescriptionDetailItem({Key? key, required this.detail}) : super(key: key);
 
@@ -39,7 +40,7 @@ class PrescriptionDetailItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Days: ${detail.noOfDays ?? "N/A"}', style: AppStyles.bodyMedium(context).copyWith(color: Colors.black87)),
+              Text('Days: ${detail.days ?? "N/A"}', style: AppStyles.bodyMedium(context).copyWith(color: Colors.black87)),
               Text(
                 'Dosage: ${detail.morning ?? "0"}+${detail.day ?? "0"}+${detail.night ?? "0"}',
                 style: AppStyles.bodyMedium(context).copyWith(color: Colors.black87),

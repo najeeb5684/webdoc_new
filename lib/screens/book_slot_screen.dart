@@ -480,7 +480,8 @@ class _BookSlotScreenState extends State<BookSlotScreen> {
                         appointmentDate: appointmentDate,
                         appointmentTime: appointmentTime,
                         slotNumber: slotNumber.toString(),
-                        fees: fees
+                        fees: fees,
+                        couponCode: ""
                     ),
                   ),
                 );

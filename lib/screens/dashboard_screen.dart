@@ -1,5 +1,67 @@
-// DashboardScreen.dart
-import 'package:Webdoc/screens/appointment_screen.dart';
+
+
+
+
+import 'package:Webdoc/screens/past_appointments_screen.dart';
+
+import 'package:Webdoc/theme/app_colors.dart';
+import 'package:flutter/material.dart';
+import 'package:Webdoc/screens/account_screen.dart';
+import 'package:Webdoc/screens/prescription_screen.dart';
+import '../widgets/bottom_navigation.dart';
+import 'home_screen.dart';
+
+
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({Key? key}) : super(key: key);
+
+  @override
+  _DashboardScreenState createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  int _selectedIndex = 0;
+
+  final List<Widget> _screens = [
+    HomeScreen(),
+    PrescriptionScreen(),
+    PastAppointmentsScreen(),
+    AccountScreen(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
+      extendBody: true, // BottomNavigation has transparency
+      body: SafeArea(  // Wrap the selected screen with SafeArea
+        child: _screens[_selectedIndex],
+      ),
+      bottomNavigationBar: Padding( // Add Padding directly to bottomNavigationBar
+        padding: EdgeInsets.only(
+            left: 50,
+            right: 50,
+            bottom: 2 + MediaQuery.of(context).padding.bottom, // Add bottom padding
+            top: 10
+        ),
+        child: BottomNavigation(
+          selectedIndex: _selectedIndex,
+          onItemTapped: _onItemTapped,
+        ),
+      ),
+    );
+  }
+}
+
+
+
+/*import 'package:Webdoc/screens/appointment_screen.dart';
 import 'package:Webdoc/screens/past_appointments_screen.dart';
 import 'package:Webdoc/screens/specialist_category_screen.dart';
 import 'package:Webdoc/theme/app_colors.dart';
@@ -110,157 +172,5 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
     );
   }
-}
-
-// DashboardScreen.dart
-/*import 'package:Webdoc/screens/appointment_screen.dart';
-import 'package:Webdoc/screens/past_appointments_screen.dart';
-import 'package:Webdoc/screens/specialist_category_screen.dart';
-import 'package:Webdoc/theme/app_colors.dart';
-import 'package:flutter/material.dart';
-import 'package:Webdoc/screens/account_screen.dart';
-import 'package:Webdoc/screens/prescription_screen.dart';
-import '../widgets/bottom_navigation.dart';
-import 'home_screen.dart';
-
-class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
-
-  @override
-  _DashboardScreenState createState() => _DashboardScreenState();
-}
-
-class _DashboardScreenState extends State<DashboardScreen> {
-  int _selectedIndex = 0;
-
-  final List<Widget> _screens = [
-    HomeScreen(),
-    PrescriptionScreen(),
-    AccountScreen(),
-    PastAppointmentsScreen(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      extendBody: true, // BottomNavigation has transparency
-      body: SafeArea(  // Wrap the selected screen with SafeArea
-        child: _screens[_selectedIndex],
-      ),
-      bottomNavigationBar: Padding( // Add Padding directly to bottomNavigationBar
-        padding: EdgeInsets.only(
-            left: 50,
-            right: 50,
-            bottom: 2 + MediaQuery.of(context).padding.bottom, // Add bottom padding
-            top: 10
-        ),
-        child: BottomNavigation(
-          selectedIndex: _selectedIndex,
-          onItemTapped: _onItemTapped,
-        ),
-      ),
-    );
-  }
 }*/
 
-
-
-
-/*
-import 'package:Webdoc/screens/appointment_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:Webdoc/screens/account_screen.dart';
-import 'package:Webdoc/screens/prescription_screen.dart';
-import '../widgets/bottom_navigation.dart';
-import 'home_screen.dart';
-
-class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
-
-  @override
-  _DashboardScreenState createState() => _DashboardScreenState();
-}
-
-class _DashboardScreenState extends State<DashboardScreen> {
-  int _selectedIndex = 0;
-
-
-
-  final List<Widget> _screens = [
-    HomeScreen(),
-    PrescriptionScreen(),
-    AccountScreen(),
-    AppointmentScreen(), // Place the widget here.
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _screens[_selectedIndex],
-      bottomNavigationBar: BottomNavigation(
-        selectedIndex: _selectedIndex,
-        onItemTapped: _onItemTapped,
-      ),
-    );
-  }
-}
-*/
-
-
-/*
-import 'package:Webdoc/screens/account_screen.dart';
-import 'package:Webdoc/screens/prescription_screen.dart';
-
-
-
-import 'package:flutter/material.dart';
-
-import '../widgets/bottom_navigation.dart';
-import 'home_screen.dart';
-
-class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
-
-  @override
-  _DashboardScreenState createState() => _DashboardScreenState();
-}
-
-class _DashboardScreenState extends State<DashboardScreen> {
-  int _selectedIndex = 0;
-
-  final List<Widget> _screens = [
-    HomeScreen(),
-    PrescriptionScreen(),
-    AccountScreen(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _screens[_selectedIndex],
-      bottomNavigationBar: BottomNavigation(
-        selectedIndex: _selectedIndex,
-        onItemTapped: _onItemTapped,
-      ),
-    );
-  }
-}*/

@@ -1,5 +1,369 @@
 
+
 import 'package:Webdoc/screens/dashboard_screen.dart';
+import 'package:Webdoc/screens/package_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'dart:io';
+
+import '../models/doctor.dart';
+//import '../services/api_service.dart'; // Removed API service import
+import '../utils/global.dart';
+import '../utils/shared_preferences.dart';
+import '../widgets/doctor_list_item.dart';
+import 'audio_call_screen.dart';
+import 'doctor_profile_screen.dart';
+import 'package:flutter/cupertino.dart';
+import '../theme/app_styles.dart';
+import '../theme/app_colors.dart';
+
+class DoctorListScreen extends StatefulWidget {
+  const DoctorListScreen({Key? key}) : super(key: key);
+
+  @override
+  State<DoctorListScreen> createState() => _DoctorListScreenState();
+}
+
+class _DoctorListScreenState extends State<DoctorListScreen> {
+  List<Doctor> _filteredDoctors = [];
+  bool _isLoading = true; // Start in the loading state
+  bool _hasInternet = true;
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    Global.isPackageActivated =
+        SharedPreferencesManager.getBool('isPackageActivated') ?? false;
+    _checkInternetConnection();
+  }
+
+  Future<void> _checkInternetConnection() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        setState(() {
+          _hasInternet = true;
+        });
+        _loadDoctorsFromFirebaseAndSetupListeners(); // Load from Firebase
+      }
+    } on SocketException catch (_) {
+      setState(() {
+        _hasInternet = false;
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _loadDoctorsFromFirebaseAndSetupListeners() async {
+    if (!_hasInternet) {
+      setState(() {
+        _isLoading = false;
+      });
+      return;
+    }
+
+    try {
+      DatabaseReference doctorsRef = FirebaseDatabase.instance.ref().child('StaticDoctors');
+
+      doctorsRef.onValue.listen((event) {
+        if (event.snapshot.value != null) {
+          final data = event.snapshot.value as Map<dynamic, dynamic>;
+          Global.allDoctorsList = _parseDoctorsFromFirebase(data);
+
+          // Sort the doctors immediately after parsing
+          _sortDoctorsByStatus();
+          _filteredDoctors = List.from(Global.allDoctorsList);
+
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('No doctors found in Firebase.')),
+          );
+          Global.allDoctorsList = [];
+          _filteredDoctors = [];
+        }
+        setState(() {
+          _isLoading = false; // Set isLoading to false AFTER data loads.
+        });
+      }, onError: (error) {
+        print("Error loading doctors from Firebase: $error");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to load doctors from Firebase: $error')),
+        );
+        setState(() {
+          _isLoading = false; // Ensure isLoading is set to false even on error
+        });
+      });
+
+      // Set up Firebase listeners for online status AFTER the initial load
+      _setupFirebaseListeners();
+
+    } catch (error) {
+      print("Error loading doctors from Firebase: $error");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to load doctors from Firebase: $error')),
+      );
+      setState(() {
+        _isLoading = false; // Ensure isLoading is set to false, even on error
+      });
+    }
+  }
+
+  List<Doctor> _parseDoctorsFromFirebase(Map<dynamic, dynamic> data) {
+    List<Doctor> doctorList = [];
+
+    data.forEach((key, value) {
+      try {
+        final doctorData = Map<String, dynamic>.from(value);
+
+        Doctor doctor = Doctor(
+          doctorSpecialty: doctorData['doctorSpecialty'] ?? '',
+          doctorId: doctorData['doctorId'] ?? key, // Use the key as doctorId
+          firstName: doctorData['firstName'] ?? '',
+          imgLink: doctorData['imgLink'] ?? '',
+          lastName: doctorData['lastName'] ?? '',
+          country: doctorData['country'] ?? '',
+          isOnline: doctorData['isOnline'] ?? '0',
+          profileMessage: doctorData['profileMessage'] ?? '',
+          rate: doctorData['rate'] ?? '5',
+          emailDoctor: doctorData['emailDoctor'] ?? '',
+          qualifications: doctorData['qualifications'] ?? '',
+          experience: doctorData['experience'] ?? '',
+        );
+        doctorList.add(doctor);
+      } catch (e) {
+        print('Error parsing doctor data: $e for doctor with key: $key');
+      }
+    });
+
+    return doctorList;
+  }
+
+  void _setupFirebaseListeners() {
+    Global.databaseReference.onValue.listen((event) {
+      if (event.snapshot.value != null) {
+        final data = event.snapshot.value as Map<dynamic, dynamic>;
+        _updateDoctorStatuses(data);
+      }
+    });
+  }
+
+  void _updateDoctorStatuses(Map<dynamic, dynamic> data) {
+    // Create a local copy to avoid modifying the list while iterating
+    List<Doctor> updatedDoctors = List.from(Global.allDoctorsList);
+
+    for (var doctor in updatedDoctors) {
+      final emailKey = doctor.emailDoctor?.replaceAll('.', '');
+      if (data.containsKey(emailKey)) {
+        doctor.isOnline = data[emailKey]['status'];
+      }
+    }
+
+    // Update the global list
+    Global.allDoctorsList = updatedDoctors;
+
+    // Sort after updating statuses
+    _sortDoctorsByStatus();
+
+    // Update the filtered list
+    setState(() {
+      _filteredDoctors = List.from(Global.allDoctorsList);
+    });
+  }
+
+
+  void _sortDoctorsByStatus() {
+    Global.allDoctorsList.sort((a, b) {
+      // Define the order: online > busy > offline
+      int getStatusPriority(String? status) {
+        switch (status?.toLowerCase()) {
+          case 'online':
+            return 0;
+          case 'busy':
+            return 1;
+          default: // Includes 'offline' or null
+            return 2;
+        }
+      }
+
+      return getStatusPriority(a.isOnline).compareTo(getStatusPriority(b.isOnline));
+    });
+  }
+
+  void _filterDoctors(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        _filteredDoctors = List.from(Global.allDoctorsList);
+      } else {
+        _filteredDoctors = Global.allDoctorsList
+            .where((doctor) =>
+        (doctor.firstName?.toLowerCase().contains(query.toLowerCase()) ??
+            false) ||
+            (doctor.lastName?.toLowerCase().contains(query.toLowerCase()) ??
+                false))
+            .toList();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.backgroundColor, // set background color to white
+
+      appBar: AppBar(
+        backgroundColor: AppColors.backgroundColor,
+        title:  Row(
+          children: [
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => DashboardScreen()),
+                        (Route<dynamic> route) => false,
+                  );
+                  // uploadDoctorDataToFirebase(context, doctorDataList);
+                },
+                icon: const Icon(Icons.arrow_back_ios,color: Colors.black,size: 16)),
+            Text(
+                'Instant Doctors',
+                style: AppStyles.bodyLarge(context).copyWith(color: Colors.black,fontWeight: FontWeight.bold)
+            ),
+          ],
+        ),
+        automaticallyImplyLeading: false,
+
+      ),
+      body: _getBody(),
+    );
+  }
+
+  Widget _getBody() {
+    if (!_hasInternet) {
+      return _buildNoInternet();
+    }
+
+    if (_isLoading) {
+      return _buildLoading();
+    }
+
+    if (_filteredDoctors.isEmpty) {
+      return _buildNoDoctors();
+    }
+
+    return ListView.builder(
+      itemCount: _filteredDoctors.length,
+      itemBuilder: (context, index) {
+        return DoctorListItem(
+          doctor: _filteredDoctors[index],
+          isPackageActivated: Global.isPackageActivated,
+          onConsultPressed: () {
+            Global.docPosition = index;
+
+            if (Global.isPackageActivated) {
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DoctorProfileScreen(  doctor: _filteredDoctors[index],
+                )
+                ),
+              );
+
+              /*Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => PackageScreen(), // Navigate to PackageScreen
+                ),
+              );*/
+              Global.fromProfile = "list";
+            } else {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => PackageScreen(), // Navigate to PackageScreen
+                ),
+              );
+            }
+          },
+          onItemTap: () {
+            // This is the new callback
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DoctorProfileScreen(  doctor: _filteredDoctors[index],
+              )
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+
+  Widget _buildLoading() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(
+                AppColors.primaryColor),
+          ),
+          const SizedBox(height: 10),
+          Text('Doctors loading...', style: AppStyles.bodyMedium(context)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNoDoctors() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.local_hospital, size: 50, color: Colors.grey),
+          const SizedBox(height: 10),
+          Text('No doctors found.', style: AppStyles.bodyMedium(context)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNoInternet() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.signal_wifi_off, size: 50, color: Colors.grey),
+          const SizedBox(height: 10),
+          Text('No internet connection.', style: AppStyles.bodyMedium(context)),
+          const SizedBox(height: 10),
+          ElevatedButton.icon(
+            onPressed: () {
+              _checkInternetConnection();
+            },
+            icon: const Icon(Icons.refresh),
+            label: const Text('Try Again'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.black,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+}
+
+
+
+/*import 'package:Webdoc/screens/dashboard_screen.dart';
 import 'package:Webdoc/screens/package_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -242,12 +606,12 @@ class _DoctorListScreenState extends State<DoctorListScreen> {
                 ),
               );
 
-              /*Navigator.push(
+              *//*Navigator.push(
                 context,
                 CupertinoPageRoute(
                   builder: (context) => PackageScreen(), // Navigate to PackageScreen
                 ),
-              );*/
+              );*//*
               Global.fromProfile = "list";
             } else {
               Navigator.push(
@@ -333,6 +697,11 @@ class _DoctorListScreenState extends State<DoctorListScreen> {
     _searchController.dispose();
     super.dispose();
   }
+
+
+
+
+
 
   final List<Map<String, dynamic>> doctorDataList = [
     {
@@ -541,11 +910,7 @@ class _DoctorListScreenState extends State<DoctorListScreen> {
       );
     }
   }
-
-
-
-
-}
+}*/
 
 
 

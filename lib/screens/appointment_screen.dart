@@ -330,10 +330,12 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 16),
-          onPressed: () => Navigator.push(
+          onPressed: () =>
+          /*    Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => DashboardScreen()),
-          ),
+          ),*/
+          Navigator.of(context).pop(),
         ),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(60.0),

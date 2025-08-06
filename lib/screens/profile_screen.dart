@@ -260,7 +260,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             _buildDetailRow(Icons.phone, 'Phone:', _profile?.payLoad.mobileNumber ?? "N/A", AppColors.primaryColor), // Blue Accent
             _buildDetailRow(Icons.person, 'Gender:', _profile?.payLoad.gender ?? "N/A",  AppColors.primaryColor), // Pink Accent
             _buildDetailRow(Icons.favorite, 'Marital Status:', _profile?.payLoad.martialStatus ?? "N/A", AppColors.primaryColor), // Light Green
-            _buildDetailRow(Icons.email, 'Email:', "webdoc.com.pk", AppColors.primaryColor), // Orange Accent
+           // _buildDetailRow(Icons.email, 'Email:', "webdoc.com.pk", AppColors.primaryColor), // Orange Accent
             _buildDetailRow(Icons.calendar_today, 'DOB:', _profile?.payLoad.dateOfBirth ?? "N/A", AppColors.primaryColor), // Purple Accent
             _buildDetailRow(Icons.fitness_center, 'Weight:', _profile?.payLoad.weight ?? "N/A", AppColors.primaryColor), // Light Blue
             _buildDetailRow(Icons.straighten, 'Height:', _profile?.payLoad.height ?? "N/A", AppColors.primaryColor), // Cyan

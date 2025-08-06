@@ -1,5 +1,6 @@
 
 
+import 'package:Webdoc/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:Webdoc/utils/shared_preferences.dart';
@@ -109,7 +110,7 @@ class _SplashScreenState extends State<SplashScreen>
     });
 
     final Uri apiUrl = Uri.parse(
-        '${ApiConstants.baseUrl}${ApiConstants.patientLoginEndpoint}');
+        '${ApiService.irfanBaseUrl}${ApiService.patientLoginEndpoint}');
 
     try {
       final response = await http
@@ -139,6 +140,8 @@ class _SplashScreenState extends State<SplashScreen>
               'name', userData['UserName'] ?? '');
           await SharedPreferencesManager.putBool(
               'isPackageActivated', userData['isPackageActivated'] ?? false);
+          await SharedPreferencesManager.putString(
+              'packageName', userData['PackageName'] ?? '');
         }
         _navigateToDashboardScreen();
       } else {

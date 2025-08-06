@@ -34,6 +34,7 @@ class EasyPaisaScreen extends StatefulWidget {
   final String? appointmentTime;
   final String? slotNumber;
   final String? fees;
+  final String? couponCode;
 
   const EasyPaisaScreen({
     Key? key,
@@ -46,6 +47,7 @@ class EasyPaisaScreen extends StatefulWidget {
     this.appointmentTime,
     this.slotNumber,
     this.fees,
+    this.couponCode,
   }) : super(key: key);
 
   @override
@@ -234,7 +236,7 @@ LwIDAQAB
         SharedPreferencesManager.putString(
             "activeDate", loginResponse.payLoad?.user?.activeDate ?? '');
         SharedPreferencesManager.putString(
-            "PackageName", loginResponse.payLoad?.user?.packageName ?? '');
+            "packageName", loginResponse.payLoad?.user?.packageName ?? '');
 
         // Now show the receipt dialog
         await showBookingReceiptDialog(
@@ -305,6 +307,9 @@ LwIDAQAB
         appointmentDate: widget.appointmentDate!,
         appointmentTime: widget.appointmentTime!,
         slotNumber: widget.slotNumber!,
+          paymentMethod:Global.paymentMethod,
+          price:widget.fees.toString(),
+          couponCode: widget.couponCode.toString()
       );
 
       // Dismiss loading overlay

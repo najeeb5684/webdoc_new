@@ -18,7 +18,7 @@ class PackageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final phoneNumber = SharedPreferencesManager.getString('mobileNumber');
     final isPakistanNumber = phoneNumber != null &&
-        (phoneNumber.startsWith('0') || phoneNumber.startsWith('+92'));
+        (phoneNumber.startsWith('03') || phoneNumber.startsWith('+92'));
 
     int oneTimePackageId = isPakistanNumber ? 1123 : 1126;
     String oneTimePackagePrice = isPakistanNumber ? "300" : "10";
