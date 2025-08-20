@@ -37,9 +37,9 @@ import '../models/wallet_history_response.dart'; // Import PackageResponse
 
 class ApiService {
   static const String baseUrlFahad = 'https://retailportalapi.webddocsystems.com/';
-  //static const String baseUrl = 'https://webdocsite.webddocsystems.com/public/api/v1/';
   static const String irfanBaseUrl = 'https://webdocsite.webddocsystems.com/public/api/v1/';// Updated base
-  static const String irfanBaseUrltesting = 'https://digital.webdoc.com.pk/ci4webdocsite/public/api/v1/';// Updated base
+ // static const String irfanBaseUrl = 'https://digital.webdoc.com.pk/ci4webdocsite/public/api/v1/';// Updated base
+
   static const String specialistDoctorListEndpoint = 'specialist/list';
   static const String specialistCategoriesEndpoint = 'specialist/categories';
   static String ciSession = '';
@@ -691,7 +691,14 @@ class ApiService {
         'couponCode': couponCode,
       });
 
+      print('Request Body: $body'); // Print the request body for debugging
+
       final response = await http.post(url, headers: headers, body: body);
+
+      print('Response Status Code: ${response.statusCode}'); // Print the status code
+
+      // Print the response body
+      print('Response Body: ${response.body}');
 
       if (response.statusCode == 200) {
         final decodedJson = jsonDecode(response.body);
